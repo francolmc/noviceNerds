@@ -47,7 +47,15 @@ def menu():
             opcion = input("Ingrese una opcion entre 1 y 5: ")
 
         # Flujos segun la opcion
-        if opcion == "5":
+        if opcion == "1":
+            buscar_persona()
+        elif opcion == "2":
+            agregar_persona()
+        elif opcion == "3":
+            eliminar_persona()
+        elif opcion == "4":
+            editar_persona()
+        elif opcion == "5":
             break
 
     print("Ud. ha terminado el programa.")
