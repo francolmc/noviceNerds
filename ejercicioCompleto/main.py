@@ -8,6 +8,29 @@
 # usando listas y diccionarios. Tambien debera repetir el programa hasta
 # que el usuario seleccione la opcion 5.
 
+#Lista de personas
+lista_personas = []
+
+# Buscar persona por email y ternar el indice
+def obtener_indice_por_email(email: str) -> int:
+    # Hacemos referencia la variable lista_personas global
+    global lista_personas
+    # Variable indice para contar la posicion de la busqueda
+    indice = 0
+    # Ciclo que recorre la lista de peronas y lo asignar a la variable persona
+    for persona in lista_personas:
+        # Preguntas si la clave email de la personas es igual al email ingresado en la funcion
+        # Recordar que la lista_personas es una lista de diccionarios.
+        if persona["email"] == email:
+            # En caso de encontrar a la persona por su email, retornamos el indice
+            return indice
+        # En caso de no encontrar y aun quedar elementos en la lista, le suma 1 al indice
+        # Es una accion de contador
+        indice = indice + 1
+    # En caso de no encontrar el elemento en la lista, esto ocurre cuando el ciclo for
+    # recorre toda la lista, retornara un -1 haciendo refrencia a que no encontro el valor.
+    return -1
+
 def buscar_persona():
     pass
 
@@ -54,6 +77,7 @@ def menu():
         elif opcion == "3":
             eliminar_persona()
         elif opcion == "4":
+
             editar_persona()
         elif opcion == "5":
             break
