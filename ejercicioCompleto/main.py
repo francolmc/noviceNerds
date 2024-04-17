@@ -34,8 +34,45 @@ def obtener_indice_por_email(email: str) -> int:
 def buscar_persona():
     pass
 
+def obtener_diccionario_persona(email: str, nombres: str, apellidos: str):
+    persona = {
+        "email": email,
+        "nombres": nombres,
+        "apellidos": apellidos
+    }
+    return persona
+
+
 def agregar_persona():
-    pass
+    global lista_personas
+    print("\nINGRESAR PERSONA\n")
+    # Solcicitar al usuario que ingrese un email
+    email = input("Ingrese el email de la persona: ")
+    # Validar que el email se encuentre disponible
+    # Si el email no se encuentra disponible, informaremos al usuario y
+    # volveremos solicitar un nuevo email.
+    while obtener_indice_por_email(email) != -1:
+        print("ERROR: El email ingresado ya esta registrado.")
+
+        opcion = input("Desea ingresar a la persona? [ingresar S o N]: ")
+        while opcion.upper() != "S" and opcion.upper() != "N":
+            print("ERROR: Debe ingresar una S o N.")
+            opcion = input("Desea ingresar a la persona [ingresar S o N]: ")
+            
+        if opcion.upper() == "S":
+            email = input("Ingrese nuevamente el email de la persona: ")
+        elif opcion.upper() == "N":
+            print("Ud. ha cancelado el registro de la persona.")
+            return
+    # En caso que el email si este disponible, solicitaremos el resto de los datos
+    nombres = input("Ingrese los nombres de la persona: ")
+    apellidos = input("Ingrese los apellidos de la persona: ")
+    # Crearemos un diccionario con los datos la persona y lo agregaremos
+    # a la lista.
+    persona = obtener_diccionario_persona(email, nombres, apellidos)
+    lista_personas.append(persona)
+    # Informamos al usuario que el proceso fue terminado    
+    print("La persona fue registrada exitosamente.")
 
 def eliminar_persona():
     pass
@@ -77,9 +114,8 @@ def menu():
         elif opcion == "3":
             eliminar_persona()
         elif opcion == "4":
-
             editar_persona()
-        elif opcion == "5":
+        else:
             break
 
     print("Ud. ha terminado el programa.")
