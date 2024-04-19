@@ -32,8 +32,24 @@ def obtener_indice_por_email(email: str) -> int:
     return -1
 
 def buscar_persona():
-    pass
+    global lista_personas
+    print("\nBUSCAR PERSONA\n")
+    # Solicitar un email al usuario
+    email = input("Ingrese el email de la persona a buscar: ")
+    # Buscar el indice
+    indice_persona = obtener_indice_por_email(email)
+    # En caso de encontrar a la persona, Obtener diccionario e informar
+    if indice_persona != -1:
+        diccionario_persona = lista_personas[indice_persona]
+        print("\nPERSONA ENCONTRADA\n")
+        print("Email: \t " + diccionario_persona["email"])
+        print("Nombres: \t " + diccionario_persona["nombres"])
+        print("Apellidos: \t " + diccionario_persona["apellidos"])
+        # En caso de NO encontrar a la persona, informar Error de no encontrado.
+    else:
+        print("ERROR: La persona no esta registrada.")
 
+# Funcion que transforma los datos de una persona a un diccionario
 def obtener_diccionario_persona(email: str, nombres: str, apellidos: str):
     persona = {
         "email": email,
@@ -42,6 +58,20 @@ def obtener_diccionario_persona(email: str, nombres: str, apellidos: str):
     }
     return persona
 
+# Funcion para validar si un email esta disponible
+def email_disponible(email: str) -> bool:
+    return obtener_indice_por_email(email) == -1
+
+# Funcion para validacion de si o no
+def confirmar_operacion(mensaje: str) -> bool:
+    opcion = input(mensaje + " [ingresar S o N]: ")
+    while opcion.upper() != "S" and opcion.upper() != "N":
+        print("ERROR: Debe ingresar una S o N.")
+        opcion = input(mensaje + " [ingresar S o N]: ")
+    if opcion.upper() == "S":
+        return True
+    elif opcion.upper() == "N":
+        return False
 
 def agregar_persona():
     global lista_personas
@@ -51,17 +81,13 @@ def agregar_persona():
     # Validar que el email se encuentre disponible
     # Si el email no se encuentra disponible, informaremos al usuario y
     # volveremos solicitar un nuevo email.
-    while obtener_indice_por_email(email) != -1:
+    while not email_disponible(email):
         print("ERROR: El email ingresado ya esta registrado.")
 
-        opcion = input("Desea ingresar a la persona? [ingresar S o N]: ")
-        while opcion.upper() != "S" and opcion.upper() != "N":
-            print("ERROR: Debe ingresar una S o N.")
-            opcion = input("Desea ingresar a la persona [ingresar S o N]: ")
-            
-        if opcion.upper() == "S":
+        respuesta = confirmar_operacion("Desea ingresar a la persona?")    
+        if respuesta:
             email = input("Ingrese nuevamente el email de la persona: ")
-        elif opcion.upper() == "N":
+        else:
             print("Ud. ha cancelado el registro de la persona.")
             return
     # En caso que el email si este disponible, solicitaremos el resto de los datos
