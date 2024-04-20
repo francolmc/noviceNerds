@@ -8,7 +8,7 @@
 # usando listas y diccionarios. Tambien debera repetir el programa hasta
 # que el usuario seleccione la opcion 5.
 
-#Lista de personas
+#Lista global de personas
 lista_personas = []
 
 # Buscar persona por email y ternar el indice
@@ -101,10 +101,50 @@ def agregar_persona():
     print("La persona fue registrada exitosamente.")
 
 def eliminar_persona():
-    pass
+    # Importar la lista de personas
+    global lista_personas
+    print("\nELIMINAR PERSONA\n")
+    # Solicitar email de la persona al usuario
+    email = input("Ingrese el email de la persona a eliminar: ")
+    # Obtener el indice de la persona
+    indice_persona = obtener_indice_por_email(email)
+    # En caso de existir la persona, preguntar si esta seguro de eliminar
+    if indice_persona != -1:
+        respuesta = confirmar_operacion("Esta seguro de eliminar a la persona con email '" + email + "'?")
+        # En caso de responder SI, eliminar la persona
+        if respuesta:
+            lista_personas.pop(indice_persona)
+            print("La persona con email '" + email + "' ha sido eliminada exitosamente.")
+        else:
+            # En caso de responder NO, Informar que el proceso se ha cancelado
+            print("Ud. ha cancelado el proceso de eliminación.")
+    else:
+        # En caso de no estar el correo informar el error de que no existe
+        print("ERROR: La persona con el email '" + email + "' no existe.")
 
 def editar_persona():
-    pass
+    # Importar lista de personas
+    global lista_personas
+    # Titulo de la funcion
+    print("\nEDITAR PERSONA\n")
+    # Solicitar email de la persona al usuario
+    email = input("Ingrese el email de la persona a editar: ")
+    # Buscar el indice de la persona a editar
+    indice_persona = obtener_indice_por_email(email)
+    # En caso de exitir la persona en la lista, mostrar los datos y preguntar
+    # que datos desea modificar
+    if indice_persona != -1:
+        print("Datos de la persona (presione ENTER en caso de NO modificar el dato):")
+        # Modificar los datos de la persona
+        for clave, valor in lista_personas[indice_persona].items():
+            if str(clave).upper() != "EMAIL":
+                nuevo_valor = input(str(clave).capitalize() + "(" + valor + "): ")
+                if len(nuevo_valor) > 0:
+                    lista_personas[indice_persona][clave] = nuevo_valor
+        print("Los datos de la persona fueron modificados exitosamente.")
+    else:
+        # En caso de no existir la persona, informar al usuario.
+        print("ERROR: La persona a editar no existe.")
 
 # Funcion que valida si una opcion es correcta
 # Si se encuentre etre 1 y 5
