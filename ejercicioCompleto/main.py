@@ -138,7 +138,7 @@ def editar_persona():
         # Modificar los datos de la persona
         for clave, valor in lista_personas[indice_persona].items():
             if str(clave).upper() != "EMAIL":
-                nuevo_valor = input(str(clave).capitalize() + "(" + valor + "): ")
+                nuevo_valor = input(str(clave).capitalize() + " (" + valor + "): ")
                 if len(nuevo_valor) > 0:
                     lista_personas[indice_persona][clave] = nuevo_valor
         print("Los datos de la persona fueron modificados exitosamente.")
